@@ -1,18 +1,29 @@
-import { REACT_ELEMENT_TYPE, REACT_FRAGMENT_TYPE } from "../shared/ReactSymbols";
+import { REACT_FRAGMENT_TYPE } from "../shared/ReactSymbols";
+import { ElementType, ReactElement } from "../shared/ReactTypes";
 
-export function jsx(type: any, props: any, maybeKey?: any) {
-  let key: any = null;
+type ConvertableToString = {
+  toString: () => string;
+};
 
-  if (maybeKey) key = maybeKey;
+export function jsx(
+  type: ElementType,
+  props: Record<string, unknown> & { key?: ConvertableToString },
+  maybeKey?: ConvertableToString
+) {
+  let key: string | null = null;
 
-  let filteredProps: any;
+  if (maybeKey) key = "" + maybeKey;
+
+  let filteredProps: {
+    [key: Exclude<string, "key">]: unknown;
+  };
 
   if (props.key) {
     key = "" + props.key;
 
     filteredProps = {};
     for (const propName in props) {
-      if (propName !== 'key') {
+      if (propName !== "key") {
         filteredProps[propName] = props[propName];
       }
     }
@@ -20,13 +31,7 @@ export function jsx(type: any, props: any, maybeKey?: any) {
     filteredProps = props;
   }
 
-  return {
-    $$typeof: REACT_ELEMENT_TYPE,
-    type,
-    props: filteredProps,
-    key,
-    ref: props.ref === undefined ? null : props.ref
-  }
+  return new ReactElement(type, filteredProps, key);
 }
 
 export const jsxs = jsx;

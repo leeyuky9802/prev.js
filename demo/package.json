@@ -2,13 +2,15 @@
   "name": "demo",
   "type": "module",
   "scripts": {
-    "dev": "NODE_ENV=production vite"
-  },
-  "devDependencies": {
-    "typescript": "~5.8.3",
-    "vite": "^6.3.5"
+    "dev": "vite"
   },
   "dependencies": {
-    "react": "workspace:^"
+    "@types/react": "^19.1.6",
+    "react": "workspace:^",
+    "react-dom": "workspace:^"
+  },
+  "devDependencies": {
+    "@rollup/plugin-alias": "^5.1.1",
+    "vite": "^6.3.5"
   }
 }

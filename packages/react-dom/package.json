@@ -1,10 +1,10 @@
 {
-  "name": "react",
-  "module": "index.ts",
+  "name": "react-dom",
   "scripts": {
     "tsc": "tsc --noEmit"
   },
   "dependencies": {
+    "react-reconciler": "workspace:^",
     "shared": "workspace:^"
   }
 }

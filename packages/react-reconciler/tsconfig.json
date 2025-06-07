@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "strict": true,
+
+    "baseUrl": ".",
+    "paths": {
+      "ReactFiberConfig": ["../shared/ReactFiberConfig.ts"]
+    }
+  },
+  "include": ["**/*", "../../global.d.ts"]
+}

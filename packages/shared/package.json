@@ -1,5 +1,4 @@
 {
   "name": "shared",
-  "module": "index.ts",
   "packageManager": "pnpm@10.11.0"
 }

@@ -1,7 +1,6 @@
 {
   "name": "react",
   "module": "index.ts",
-  "packageManager": "pnpm@10.11.0",
   "dependencies": {
     "shared": "workspace:^"
   }

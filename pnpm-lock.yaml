@@ -7,7 +7,7 @@ settings:
 importers:
 
   .:
-    dependencies:
+    devDependencies:
       '@eslint/js':
         specifier: ^9.28.0
         version: 9.28.0
@@ -30,9 +30,6 @@ importers:
         specifier: workspace:^
         version: link:../packages/react
     devDependencies:
-      typescript:
-        specifier: ~5.8.3
-        version: 5.8.3
       vite:
         specifier: ^6.3.5
         version: 6.3.5

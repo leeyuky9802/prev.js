@@ -1,11 +1,12 @@
 {
   "name": "prev.js",
   "scripts": {
+    "dev": "pnpm -F demo dev",
     "lint": "eslint .",
     "tsc": "tsc --noEmit"
   },
   "packageManager": "pnpm@10.11.0",
-  "dependencies": {
+  "devDependencies": {
     "@eslint/js": "^9.28.0",
     "eslint": "^9.28.0",
     "globals": "^16.2.0",

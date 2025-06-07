@@ -1,5 +1,7 @@
-import { REACT_FRAGMENT_TYPE } from "../shared/ReactSymbols";
+import  { REACT_FRAGMENT_TYPE } from "../shared/ReactSymbols";
 
-export default {};
+export default {
+  Fragment: REACT_FRAGMENT_TYPE,
+};
 
 export const Fragment = REACT_FRAGMENT_TYPE;

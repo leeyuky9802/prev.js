@@ -1,6 +1,7 @@
 {
   "name": "prev.js",
   "scripts": {
+    "dev": "pnpm -F demo dev",
     "lint": "eslint .",
     "tsc": "tsc --noEmit"
   },

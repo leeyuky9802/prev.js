@@ -1,4 +1,5 @@
 import type { FiberNode } from ".";
+import { NoFlags } from "../ReactFiberFlags";
 
 export class BaseFiber {
   // tree
@@ -6,10 +7,16 @@ export class BaseFiber {
   sibling: FiberNode | null = null;
   child: FiberNode | null = null;
 
+  // effects
+  flags: number = NoFlags;
+
   clean() {
     this.return = null;
     this.sibling = null;
     this.child = null;
+
+    // effects
+    this.flags = NoFlags;
   }
 }
 

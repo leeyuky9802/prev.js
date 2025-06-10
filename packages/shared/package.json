@@ -1,5 +1,7 @@
 {
   "name": "shared",
-  "module": "index.ts",
+  "scripts": {
+    "tsc": "tsc --noEmit"
+  },
   "packageManager": "pnpm@10.11.0"
 }

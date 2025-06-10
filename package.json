@@ -3,7 +3,7 @@
   "scripts": {
     "dev": "pnpm -F demo dev",
     "lint": "eslint .",
-    "tsc": "tsc --noEmit"
+    "tsc": "pnpm -F react-dom -F react-reconciler -F react -F shared tsc"
   },
   "packageManager": "pnpm@10.11.0",
   "dependencies": {

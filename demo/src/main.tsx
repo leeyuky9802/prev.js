@@ -1,16 +1,11 @@
-/* eslint-disable */
-// @ts-nocheck - this is the demo
+import { createRoot } from "react-dom/client";
 
-import React from "react";
+const hostRoot = document.getElementById("root");
 
-console.log("dev", <div />);
+const root = createRoot(hostRoot!);
 
-console.log("fragment", <></>);
-
-console.log("fragment with key", <React.Fragment key="1" />);
-
-function FC({ children }) {
-  return <div>hello, {children}</div>;
-}
-
-console.log("functional component", <FC>world</FC>);
+root.render(
+  <div>
+    <span>hello world! from prev.js</span>
+  </div>
+);

@@ -8,7 +8,11 @@ import { HostRoot } from "./ReactWorkTags";
 export function scheduleUpdateOnFiber(fiber: FiberNode) {
   const fiberRootNode = markUpdateFromFiberToRoot(fiber);
 
+  console.log("render phase started");
   renderRoot(fiberRootNode);
+
+  console.log("commit phase started");
+  commitRoot(fiberRootNode);
 }
 
 function markUpdateFromFiberToRoot(fiber: FiberNode): FiberRootNode {
@@ -41,7 +45,6 @@ function renderRoot(fiberRootNode: FiberRootNode) {
 
   // commit phase
   fiberRootNode.finishedWork = fiberRootNode.current.alternate!;
-  commitRoot(fiberRootNode);
 }
 
 function performUnitOfWork(fiber: FiberNode) {

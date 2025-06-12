@@ -2,6 +2,7 @@ import type { Container } from "ReactFiberConfig";
 import { FiberRootNode } from "./ReactFiber/FiberRootNode";
 import { HostRootFiber } from "./ReactFiber/HostRootFiber";
 import type { ReactNode } from "shared/ReactTypes";
+import { scheduleUpdateOnFiber } from "./ReactFiberWorkLoop";
 
 export function createContainer(container: Container) {
   const fiberRootNode = new FiberRootNode(container, {} as HostRootFiber);
@@ -21,5 +22,5 @@ export function updateContainer(
 
   currentHostRootFiber.updateQueue = reactNode;
 
-  // TODO: API for starting the rendering
+  scheduleUpdateOnFiber(currentHostRootFiber);
 }

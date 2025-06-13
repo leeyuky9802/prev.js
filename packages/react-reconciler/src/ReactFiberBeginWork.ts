@@ -1,9 +1,18 @@
 import type { ReactNode } from "shared/ReactTypes";
 import type { FiberNode } from "./ReactFiber";
 import type { HostRootFiber } from "./ReactFiber/HostRootFiber";
-import { HostComponent, HostRoot, HostText } from "./ReactWorkTags";
+import {
+  Fragment,
+  FunctionComponent,
+  HostComponent,
+  HostRoot,
+  HostText,
+} from "./ReactWorkTags";
 import type { HostComponentFiber } from "./ReactFiber/HostComponentFiber";
 import { mountChildFibers, reconcileChildFibers } from "./ReactChildFiber";
+import type { FragmentFiber } from "./ReactFiber/FragmentFiber";
+import type { FunctionComponentFiber } from "./ReactFiber/FunctionComponent";
+import { renderWithHooks } from "./ReactFiberHooks";
 
 export function beginWork(fiber: FiberNode): FiberNode | null {
   switch (fiber.tag) {
@@ -13,11 +22,29 @@ export function beginWork(fiber: FiberNode): FiberNode | null {
       return updateHostComponent(fiber);
     case HostText:
       return null;
+    case Fragment:
+      return updateFragment(fiber);
+    case FunctionComponent:
+      return updateFunctionComponent(fiber);
     default:
       throw new Error(
         `beginWork: Unsupported fiber tag ${fiber}. This is likely a bug in React.`
       );
   }
+}
+
+function updateFunctionComponent(fiber: FunctionComponentFiber) {
+  const children = renderWithHooks(fiber);
+
+  reconcileChildren(fiber, children);
+  return fiber.child;
+}
+
+function updateFragment(fiber: FragmentFiber) {
+  const children = fiber.pendingProps;
+
+  reconcileChildren(fiber, children);
+  return fiber.child;
 }
 
 function updateHostRoot(fiber: HostRootFiber): FiberNode | null {

@@ -1,6 +1,10 @@
 import type { ReactElement, ReactNode } from "shared/ReactTypes";
-import { createFiberFromElement, type FiberNode } from "./ReactFiber";
-import { REACT_ELEMENT_TYPE } from "shared/ReactSymbols";
+import {
+  createFiberFromElement,
+  createFiberFromReactNode,
+  type FiberNode,
+} from "./ReactFiber";
+import { REACT_ELEMENT_TYPE, REACT_FRAGMENT_TYPE } from "shared/ReactSymbols";
 import { Placement } from "./ReactFiberFlags";
 import { HostTextFiber } from "./ReactFiber/HostTextFiber";
 
@@ -43,13 +47,58 @@ function createChildReconciler(shouldTrackEffects: boolean) {
     return fiber;
   }
 
+  function reconcileChildrenArray(
+    returnFiber: FiberNode,
+    currentFiber: FiberNode | null,
+    newChildren: ReactNode[]
+  ): FiberNode | null {
+    if (!currentFiber) {
+      // mount
+      let firstNewFiber: FiberNode | null = null;
+      let lastNewFiber: FiberNode | null = null;
+
+      for (let i = 0; i < newChildren.length; i++) {
+        const newFiberChild = createFiberFromReactNode(newChildren[i]);
+
+        if (newFiberChild) {
+          if (firstNewFiber === null) {
+            firstNewFiber = newFiberChild;
+            lastNewFiber = newFiberChild;
+          } else {
+            lastNewFiber!.sibling = newFiberChild;
+            lastNewFiber = newFiberChild;
+          }
+
+          newFiberChild.return = returnFiber;
+        }
+      }
+      return firstNewFiber;
+    } else {
+      return null; // TODO: implement update
+    }
+  }
+
   return function reconcileChildFibers(
     returnFiber: FiberNode,
     currentFiber: FiberNode | null,
     newChild: ReactNode
   ) {
+    // if this is a unkeyed top-level fragment
+    if (
+      typeof newChild === "object" &&
+      newChild !== null &&
+      !Array.isArray(newChild) &&
+      newChild.$$typeof === REACT_ELEMENT_TYPE &&
+      newChild.type === REACT_FRAGMENT_TYPE &&
+      newChild.key === null
+    ) {
+      newChild = newChild.props.children;
+    }
+
     if (typeof newChild === "object" && newChild !== null) {
-      if (Array.isArray(newChild)) throw new Error("unhandled situation");
+      if (Array.isArray(newChild)) {
+        return reconcileChildrenArray(returnFiber, currentFiber, newChild);
+      }
 
       switch (newChild.$$typeof) {
         case REACT_ELEMENT_TYPE:

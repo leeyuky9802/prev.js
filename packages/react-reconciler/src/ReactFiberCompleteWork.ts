@@ -2,16 +2,23 @@ import {
   appendInitialChild,
   createInstance,
   createTextInstance,
-  type Instance,
 } from "ReactFiberConfig";
 import type { FiberNode } from "./ReactFiber";
-import { HostComponent, HostRoot, HostText } from "./ReactWorkTags";
+import {
+  Fragment,
+  FunctionComponent,
+  HostComponent,
+  HostRoot,
+  HostText,
+} from "./ReactWorkTags";
 import { Update } from "./ReactFiberFlags";
 import type { HostComponentFiber } from "./ReactFiber/HostComponentFiber";
 
 export function completeWork(wipFiber: FiberNode): void {
   switch (wipFiber.tag) {
     case HostRoot:
+    case FunctionComponent:
+    case Fragment:
       return;
     case HostComponent:
       if (wipFiber.stateNode) {
@@ -42,10 +49,26 @@ export function completeWork(wipFiber: FiberNode): void {
 }
 
 function appendAllChildren(wipFiber: HostComponentFiber) {
-  if (wipFiber.child!.stateNode) {
-    appendInitialChild(
-      wipFiber.stateNode!,
-      wipFiber.child!.stateNode! as Instance
-    );
+  let node: FiberNode | null = wipFiber.child;
+
+  down: while (node !== null) {
+    if (node.tag === HostComponent || node.tag === HostText) {
+      appendInitialChild(wipFiber.stateNode!, node.stateNode!);
+    } else {
+      if (node.child) {
+        node = node.child;
+        continue down;
+      }
+    }
+
+    while (node !== wipFiber) {
+      if (node.sibling) {
+        node = node.sibling;
+        continue down;
+      }
+      node = node.return!;
+    }
+
+    return;
   }
 }

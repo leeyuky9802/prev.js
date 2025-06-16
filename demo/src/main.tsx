@@ -4,8 +4,12 @@ const hostRoot = document.getElementById("root");
 
 const root = createRoot(hostRoot!);
 
+const FC = () => {
+  return <div>test this is just a test</div>;
+};
+
 root.render(
   <div>
-    <span>hello world! from prev.js</span>
+    <FC />
   </div>
 );

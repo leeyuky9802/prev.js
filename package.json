@@ -1,14 +1,16 @@
 {
   "name": "prev.js",
   "scripts": {
-    "lint": "eslint .",
-    "tsc": "tsc --noEmit"
+    "lint": "eslint . --ignore-pattern .gitignore",
+    "format": "prettier --write . --ignore-path .gitignore",
+    "tsc": "pnpm -F react -F react-dom -F react-reconciler -F shared tsc"
   },
-  "packageManager": "pnpm@10.11.0",
-  "dependencies": {
+  "devDependencies": {
     "@eslint/js": "^9.28.0",
     "eslint": "^9.28.0",
     "globals": "^16.2.0",
+    "prettier": "^3.5.3",
+    "prettier-plugin-organize-imports": "^4.1.0",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.33.1"
   }

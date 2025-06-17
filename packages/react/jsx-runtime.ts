@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { REACT_FRAGMENT_TYPE } from "../shared/ReactSymbols";
 import { ElementType, ReactElement } from "../shared/ReactTypes";
 
@@ -37,3 +38,8 @@ export function jsx(
 export const jsxs = jsx;
 
 export const Fragment = REACT_FRAGMENT_TYPE;
+=======
+export { jsx, jsxs } from "./src/jsx";
+
+export { REACT_FRAGMENT_TYPE as Fragment } from "shared/ReactSymbols";
+>>>>>>> mount

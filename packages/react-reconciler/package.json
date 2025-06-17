@@ -1,9 +1,9 @@
 {
-  "name": "shared",
+  "name": "react-reconciler",
   "scripts": {
     "tsc": "tsc --noEmit"
   },
   "dependencies": {
-    "react": "workspace:^"
+    "shared": "workspace:^"
   }
 }
